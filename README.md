@@ -6,6 +6,7 @@ data about Node Packaged Modules.
 To run:
 
   bundle install
+  
   ruby populate.rb -d
 
 should create the file npm_modules.json.bz2, which can be uploaded to
