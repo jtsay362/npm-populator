@@ -1,0 +1,6 @@
+downloaded/
+.idea/
+
+npm_modules.json
+npm_modules.json.bz2
+*~
