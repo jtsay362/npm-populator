@@ -28,90 +28,52 @@ class NpmPackagePopulator
       out.write <<-eos
 {
   "metadata" : {
+    "settings" : {
+      "analysis": {
+        "char_filter" : {
+          "no_special" : {
+            "type" : "mapping",
+            "mappings" : ["-=>", "_=>", ".=>"]
+          }
+        },
+        "analyzer" : {
+          "lower_whitespace" : {
+            "type" : "custom",
+            "tokenizer": "whitespace",
+            "filter" : ["lowercase"],
+            "char_filter" : ["no_special"]
+          }
+        }
+      }
+    },
     "mapping" : {
       "_all" : {
         "enabled" : false
       },
       "properties" : {
         "name" : {
-          "type" : "multi_field",
-          "path" : "just_name",
-          "fields" : {
-             "rawName" : { "type" : "string", "index" : "not_analyzed" },
-             "name" : { "type" : "string", "index" : "analyzed" }
-          }
+          "type" : "string",
+          "analyzer" : "lower_whitespace"
         },
         "description" : {
           "type" : "string",
-          "index" : "analyzed"
+          "analyzer" : "english"
         },
         "author" : {
           "type" : "object",
-          "properties" : {
-            "name" : {
-              "type" : "string",
-              "index" : "no"
-            },
-            "email" : {
-              "type" : "string",
-              "index" : "no"
-            }
-          }
+          "enabled" : false
         },
         "contributors" : {
           "type" : "object",
-          "properties" : {
-            "name" : {
-              "type" : "string",
-              "index" : "no"
-            },
-            "email" : {
-              "type" : "string",
-              "index" : "no"
-            },
-            "github" : {
-              "type" : "string",
-              "index" : "no"
-            },
-            "url" : {
-              "type" : "string",
-              "index" : "no"
-            },
-            "web" : {
-              "type" : "string",
-              "index" : "no"
-            }
-          }
+          "enabled" : false
         },
         "dist-tags" : {
           "type" : "object",
-          "properties" : {
-            "name" : {
-              "type" : "string",
-              "index" : "no"
-            },
-            "version" : {
-              "type" : "string",
-              "index" : "no"
-            }
-          }
+          "enabled" : false
         },
         "versions" : {
           "type" : "object",
-          "properties" : {
-            "name" : {
-              "type" : "string",
-              "index" : "no"
-            },
-            "tag" : {
-              "type" : "string",
-              "index" : "no"
-            },
-            "version" : {
-              "type" : "string",
-              "index" : "no"
-            }
-          }
+          "enabled" : false
         },
         "main" : {
           "type" : "string",
@@ -119,20 +81,7 @@ class NpmPackagePopulator
         },
         "maintainers" : {
           "type" : "object",
-          "properties" : {
-            "name" : {
-              "type" : "string",
-              "index" : "no"
-            },
-            "email" : {
-              "type" : "string",
-              "index" : "no"
-            },
-            "website" : {
-              "type" : "string",
-              "index" : "no"
-            }
-          }
+          "enabled" : false
         },
         "readmeFilename" : {
           "type" : "string",
@@ -140,106 +89,7 @@ class NpmPackagePopulator
         },
         "repository" : {
           "type" : "object",
-          "properties" : {
-            "author" : {
-              "type" : "string",
-              "index" : "no"
-            },
-
-            "commit_date" : {
-              "type" : "date",
-              "index" : "no"
-            },
-            "dist" : {
-              "type" : "string",
-              "index" : "no"
-            },
-            "email" : {
-              "type" : "string",
-              "index" : "no"
-            },
-            "git" : {
-              "type" : "string",
-              "index" : "no"
-            },
-            "github" : {
-              "type" : "string",
-              "index" : "no"
-            },
-            "handle" : {
-              "type" : "string",
-              "index" : "no"
-            },
-            "id_string" : {
-              "type" : "string",
-              "index" : "no"
-            },
-            "job" : {
-              "type" : "string",
-              "index" : "no"
-            },
-            "main" : {
-              "type" : "string",
-              "index" : "no"
-            },
-            "name" : {
-              "type" : "string",
-              "index" : "no"
-            },
-            "repository" : {
-              "type" : "string",
-              "index" : "no"
-            },
-            "revision" : {
-              "type" : "string",
-              "index" : "no"
-            },
-            "private" : {
-              "type" : "string",
-              "index" : "no"
-            },
-            "static" : {
-              "type" : "string",
-              "index" : "no"
-            },
-            "title" : {
-              "type" : "string",
-              "index" : "no"
-            },
-            "type" : {
-              "type" : "string",
-              "index" : "no"
-            },
-            "update" : {
-              "type" : "string",
-              "index" : "no"
-            },
-            "url" : {
-              "type" : "string",
-              "index" : "no"
-            },
-            "version" : {
-              "type" : "string",
-              "index" : "no"
-            },
-            "versions" : {
-              "type" : "object",
-              "properties" : {
-                "tag" : {
-                  "type" : "string",
-                  "index" : "no"
-                },
-                "version" : {
-                  "type" : "string",
-                  "index" : "no"
-                }
-              }
-            },
-            "web" :  {
-              "type" : "string",
-              "index" : "no"
-            }
-          }
+          "enabled" : false
         },
         "dist" : {
           "type" : "string",
@@ -251,16 +101,7 @@ class NpmPackagePopulator
         },
         "gpg" : {
           "type" : "object",
-          "properties" : {
-            "fingerprint" : {
-              "type" : "string",
-              "index" : "no"
-            },
-            "signature" : {
-              "type" : "string",
-              "index" : "no"
-            }
-          }
+          "enabled" : false
         },
         "homepage" : {
           "type" : "string",
@@ -284,84 +125,11 @@ class NpmPackagePopulator
         },
         "bugs" : {
           "type" : "object",
-          "properties" : {
-            "bugs" : {
-              "type" : "string",
-              "index" : "no"
-            },
-            "email" : {
-              "type" : "string",
-              "index" : "no"
-            },
-            "license" : {
-              "type" : "string",
-              "index" : "no"
-            },
-            "mail" : {
-              "type" : "string",
-              "index" : "no"
-            },
-            "name" : {
-              "type" : "string",
-              "index" : "no"
-            },
-            "readmeFilename" : {
-              "type" : "string",
-              "index" : "no"
-            },
-            "tags" : {
-              "type" : "object",
-              "properties" : {
-                "tag" : {
-                  "type" : "string",
-                  "index" : "no"
-                },
-                "version" : {
-                  "type" : "string",
-                  "index" : "no"
-                }
-              }
-            },
-            "versions" : {
-              "type" : "object",
-              "properties" : {
-                "tag" : {
-                  "type" : "string",
-                  "index" : "no"
-                },
-                "version" : {
-                  "type" : "string",
-                  "index" : "no"
-                }
-              }
-            },
-            "time" : {
-              "type" : "object",
-              "properties" : {
-                "modified" : {
-                  "type" : "date",
-                  "index" : "no"
-                }
-              }
-            },
-            "url" : {
-              "type" : "string",
-              "index" : "no"
-            },
-            "web" : {
-              "type" : "string",
-              "index" : "no"
-            }
-          }
+          "enabled" : false
         },
         "time" : {
           "type" : "object",
-          "properties" : {
-            "modified" : {
-              "type" : "date",
-              "index" : "no"
-            }
-          }
+          "enabled" : false
         },
         "keywords" : {
           "type" : "string",
@@ -382,6 +150,10 @@ class NpmPackagePopulator
         "updated" : {
           "type" : "date",
           "store" : true
+        },
+        "suggest" : {
+          "type" : "completion",
+          "analyzer" : "lower_whitespace"
         }
       }
     }
@@ -454,6 +226,8 @@ class NpmPackagePopulator
           p['tags'] = distTags.keys.map { |tag| {tag: tag.to_s, version: distTags[tag] } }
           p.delete('dist-tags')
         end
+
+        p['suggest'] = p['name']
 
         rv << p
       end
