@@ -17,3 +17,6 @@ https://solveforall.com/docs/developer/semantic_data_collection
 
 Thanks to npmjs.org for providing this data!
 
+License
+
+This project is licensed with the Apache License, Version 2.0. See LICENSE.
