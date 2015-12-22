@@ -33,13 +33,13 @@ class NpmPackagePopulator
         "char_filter" : {
           "no_special" : {
             "type" : "mapping",
-            "mappings" : ["-=>", "_=>", ".=>"]
+            "mappings" : ["-=>", "_=>", ".=>", "\\\\u0020=>"]
           }
         },
         "analyzer" : {
-          "lower_whitespace" : {
+          "lower_keyword" : {
             "type" : "custom",
-            "tokenizer": "whitespace",
+            "tokenizer": "keyword",
             "filter" : ["lowercase"],
             "char_filter" : ["no_special"]
           }
@@ -53,7 +53,7 @@ class NpmPackagePopulator
       "properties" : {
         "name" : {
           "type" : "string",
-          "analyzer" : "lower_whitespace"
+          "analyzer" : "lower_keyword"
         },
         "description" : {
           "type" : "string",
@@ -153,7 +153,7 @@ class NpmPackagePopulator
         },
         "suggest" : {
           "type" : "completion",
-          "analyzer" : "lower_whitespace"
+          "analyzer" : "lower_keyword"
         }
       }
     }
